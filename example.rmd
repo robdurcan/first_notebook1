@@ -1,0 +1,49 @@
+---
+title: "example1"
+author: "Rob Durcan"
+date: "2022-12-01"
+output: html_document
+---
+# This is a header
+```{r load-data, message=FALSE}
+library(tidyverse)
+library(kableExtra)
+
+# This is a comment
+# Load the dataset
+pop_data <- read_csv("data/gapminder_data.csv")
+
+#create a table with data from european countries in 2007showing the countries with the largest life expectancy on top
+euro_data_tbl <- pop_data %>%
+                    filter(continent == "Europe" & year == 2007) %>%
+                    select(-continent, -year) %>%
+                    arrange(desc(lifeExp)) %>%
+                    rename(Country = country, "Population Size" = pop, "Life Expectancy" = lifeExp, "GDP" = gdpPercap)
+```
+
+```{r create-table}
+euro_data_tbl %>%
+  kbl()%>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+library(kableExtra)
+dt <- mtcars[1:5, 1:6]
+
+
+
+kbl(dt) %>%
+  kable_styling (bootstrap_options = c("striped", "hover"))
+  
+  
+kbl(euro_data_tbl) %>%
+  kable_styling (bootstrap_options = c("striped", "hover"))
+  
+  
+```{r}
+paged_table(euro_data_tbl)
+```
+
+
+  
+  
